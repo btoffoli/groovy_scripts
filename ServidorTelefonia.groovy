@@ -1,4 +1,4 @@
-def server = new ServerSocket(20000)
+def server = new ServerSocket(10001)
 def outputs = [:]
 
 class Faker {
@@ -74,8 +74,8 @@ def handleConnection = { Socket socket ->
 	}
 }
 
-def enviarPacote = { String telefone = Faker.numerify('##########'), String ramal = 301/*Faker.numerify('###')*/ ->
-	String pacote = "${2 as Character}${32 as Character}${telefone}${32 as Character}${ramal}${3 as Character}" as String
+def enviarPacote = { String telefone = Faker.numerify('##########'), String ramal = 5063/*Faker.numerify('###')*/ ->
+	String pacote = "ani=${telefone}|dnis=${ramal}|userinfo=|ucid=00001060051346348404\n" as String
 	log "Enviando pacote ${pacote}"
 	outputs.each { hc, os ->
 		os << "${pacote}"
@@ -93,7 +93,7 @@ def handleCommandLine = { String line ->
 	} else if (command == 'send') {
 		String telefone = params.length > 1 ? params[1] : Faker.numerify('##########')
 		String ramal = params.length > 2 ? params[2] : Faker.numerify('###')
-		enviarPacote(telefone, ramal) 
+		enviarPacote(telefone, ramal)
 	} else if (command == 'fake') {
 		enviarPacote()
 	}
@@ -119,8 +119,8 @@ Thread.startDaemon {
 			def t = obterCauseErro(e)
 			log "Servidor terminado: ${t.message}"
 		}
-	}	
-} 
+	}
+}
 
 System.in.withReader { reader ->
 	String line = null
