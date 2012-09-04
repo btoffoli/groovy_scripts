@@ -74,7 +74,7 @@ def handleConnection = { Socket socket ->
 	}
 }
 
-def enviarPacote = { String telefone = Faker.numerify('##########'), String ramal = 5063/*Faker.numerify('###')*/ ->
+def enviarPacote = { String telefone = Faker.numerify('##########'), String ramal = 5047/*Faker.numerify('###')*/ ->
 	String pacote = "ani=${telefone}|dnis=${ramal}|userinfo=|ucid=00001060051346348404\n" as String
 	log "Enviando pacote ${pacote}"
 	outputs.each { hc, os ->
@@ -102,7 +102,7 @@ def handleCommandLine = { String line ->
 Thread.startDaemon {
 	while (Thread.currentThread().alive && !Thread.currentThread().interrupted) {
 		enviarPacote()
-		long interval = (15 + Faker.generator.nextInt(30)) * 1000l
+		long interval = (0 + Faker.generator.nextInt(2)) * 1000l
 		log "Aguardando ${interval} milisegundos"
 		Thread.sleep(interval) {
 			log 'Interrompeu'

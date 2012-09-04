@@ -1,5 +1,6 @@
 @Grapes([
     @Grab("org.codehaus.geb:geb-core:0.7.1"),
+    //@Grab("org.seleniumhq.selenium:selenium-htmlunit-driver:2.25.0"),
     @Grab("org.seleniumhq.selenium:selenium-firefox-driver:2.25.0"),
     @Grab("org.seleniumhq.selenium:selenium-support:2.25.0")
 ])
@@ -27,7 +28,8 @@ Browser.drive {
     firstLink.click()
 
     // wait for Google's javascript to redirect to Wikipedia
-    waitFor { title == "Wikipedia"; close() }
+    waitFor(60, 0.5) { title == "Wikipedia"; }
 
-    //close()
+
+    close()
 }
